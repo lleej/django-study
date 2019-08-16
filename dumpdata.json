@@ -1,0 +1,74 @@
+[
+{
+    "model": "polls.question",
+    "pk": 1,
+    "fields": {
+        "question_text": "What's up?",
+        "pub_date": "2019-07-29T13:33:00",
+        "question_img": ""
+    }
+},
+{
+    "model": "polls.question",
+    "pk": 2,
+    "fields": {
+        "question_text": "How are you!",
+        "pub_date": "2019-07-29T11:40:00",
+        "question_img": "files/avatar_ai3QnI0.png"
+    }
+},
+{
+    "model": "polls.question",
+    "pk": 3,
+    "fields": {
+        "question_text": "How are you!jhjhj",
+        "pub_date": "2019-08-01T10:38:00",
+        "question_img": "files/avatar.png"
+    }
+},
+{
+    "model": "polls.choice",
+    "pk": 1,
+    "fields": {
+        "question": 1,
+        "choice_text": "Not much",
+        "votes": 9
+    }
+},
+{
+    "model": "polls.choice",
+    "pk": 2,
+    "fields": {
+        "question": 1,
+        "choice_text": "The sky",
+        "votes": 101
+    }
+},
+{
+    "model": "polls.choice",
+    "pk": 3,
+    "fields": {
+        "question": 1,
+        "choice_text": "Just hacking again!",
+        "votes": 3
+    }
+},
+{
+    "model": "polls.choice",
+    "pk": 4,
+    "fields": {
+        "question": 3,
+        "choice_text": "Just hacking again!",
+        "votes": 55454
+    }
+},
+{
+    "model": "polls.choice",
+    "pk": 5,
+    "fields": {
+        "question": 3,
+        "choice_text": "jkhkkjkjk",
+        "votes": 1
+    }
+}
+]
