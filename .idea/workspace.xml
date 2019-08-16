@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd27388a-69f9-4871-bfd8-ae154e6abaec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/makevue/vue-template/build/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/makevue/vue-template/build/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/makevue/vue-template/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/makevue/vue-template/src/layout/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/makevue/vue-template/src/layout/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/makevue/vue-template/src/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/makevue/vue-template/src/settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/makevue/vue-template/src/views/table/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/makevue/vue-template/src/views/table/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/makevue/vue-template/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/makevue/vue-template/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/base.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +59,7 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/makevue/vue-template" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="912" />
@@ -74,6 +71,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/makevue" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -81,6 +79,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -276,7 +275,7 @@
       <workItem from="1565329509773" duration="71000" />
       <workItem from="1565329622507" duration="1454000" />
       <workItem from="1565331188097" duration="10441000" />
-      <workItem from="1565590415090" duration="85406000" />
+      <workItem from="1565590415090" duration="88302000" />
     </task>
     <servers />
   </component>
@@ -304,6 +303,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/makevue/vue-template" />
+    </ignored-roots>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

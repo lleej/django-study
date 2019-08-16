@@ -36,19 +36,33 @@ This is the Django template system.
     2.1 Variable 变量处理对象
     作用：处理Token内容，判断其内容是常量"xxx"，变量xxx，还是对象xxx.yyy.zzz
     函数：resolve(context) 从context环境对象中取出变量的值，可以是对象、变量、无参方法
+    输出：渲染后的结果
 
     2.2 FilterExpression 过滤器表达式对象
+    作用：处理Token中变量的内容，得到变量对象Variant以及过滤器列表filters
+    函数：resolve(context) 会调用Variable的resolve()函数，然后调用过滤器处理函数
+    输出：渲染后的结果
+
+    2.3 Node 节点对象
+    作用：对包含的子节点或者变量进行渲染
+    说明：Node 是一个基类，提供了render()函数
+    可以通过继承Node，实现对特定节点的渲染，例如：if for url等
+    本模块中提供了TextNode 和 VariableNode
+
+        2.3.1 TextNode 文本节点对象
+        作用：用于保存纯文本的内容，其渲染函数只返回自身保存的字符串
+
+        2.3.2 VariableNode 变量节点对象
+        作用：对变量(包含过滤器) 进行渲染，调用 FilterExpression的resolve()进行渲染，然后对结果进行转义处理
+
+    2.4 NodeList 节点列表对象
+    作用：
 
 3. 模板包装器 Template
 作用：封装模板的编译和渲染过程，方便使用者使用
 核心：
 
 
-3. 编译后节点 Node
-
-处理步骤如下：
-输入：模板字符串
-输出：标记节点
 
 How it works:
 
@@ -737,6 +751,10 @@ class FilterExpression:
     解析变量标识的内容
     分离出：常量(' ' " ")和变量
     分离出：过滤器名称，过滤器参数
+    属性：
+    1. var 变量对象 Variable
+    2. filters 保存过滤器的列表 [(func, [(False, Variable), (True, Variable)]), ]
+
     Parse a variable token and its optional filters (all as a single string),
     and return a list of tuples of the filter name and arguments.
     Sample::
@@ -752,12 +770,16 @@ class FilterExpression:
     def __init__(self, token, parser):
         """
         构造函数
-        :param token: 变量标识，是一个字符串
+        :param token: 变量标识，是字符串,Token对象的内容
         :param parser: Parser实例
         """
         self.token = token
+        # 使用正则表达式分隔变量、过滤器、过滤器参数
         matches = filter_re.finditer(token)
+        # 变量
         var_obj = None
+        # 过滤器列表
+        # [(func, [(False, Variable), (True, Variable)]), ]
         filters = []
         upto = 0
         for match in matches:
@@ -767,10 +789,14 @@ class FilterExpression:
                                           "%s|%s|%s" %
                                           (token[:upto], token[upto:start],
                                            token[start:]))
+            # 如果变量没有赋值，则说明当前处理的是变量
             if var_obj is None:
+                # 取出解析出的变量名和常量名
                 var, constant = match.group("var", "constant")
                 if constant:
                     try:
+                        # 如果是常量，直接创建 Variable 对象
+                        # 因为有可能，constant 是需要翻译的，因此，需要调用 resolve()进行处理
                         var_obj = Variable(constant).resolve({})
                     except VariableDoesNotExist:
                         var_obj = None
@@ -778,16 +804,22 @@ class FilterExpression:
                     raise TemplateSyntaxError("Could not find variable at "
                                               "start of %s." % token)
                 else:
+                    # 创建变量对象，变量的渲染需要context，因此这里只是创建
                     var_obj = Variable(var)
             else:
+                # 如果已经处理了变量，则后面的都是过滤器
+                # 取出过滤器的名称
                 filter_name = match.group("filter_name")
                 args = []
+                # 取出过滤器的参数名
                 constant_arg, var_arg = match.group("constant_arg", "var_arg")
                 if constant_arg:
                     args.append((False, Variable(constant_arg).resolve({})))
                 elif var_arg:
                     args.append((True, Variable(var_arg)))
+                # 从parser中查找过滤器对应的处理函数
                 filter_func = parser.find_filter(filter_name)
+                # 检查过滤器函数是否有效
                 self.args_check(filter_name, filter_func, args)
                 filters.append((filter_func, args))
             upto = match.end()
@@ -799,8 +831,17 @@ class FilterExpression:
         self.var = var_obj
 
     def resolve(self, context, ignore_failures=False):
+        """
+        基于 context 上下文，生成处理后的结果
+        :param context: 上下文 Context对象
+        :param ignore_failures: 是否忽略异常
+        :return:
+        """
+        # 如果 var 是一个 Variable
+        # 有可能是一个 None
         if isinstance(self.var, Variable):
             try:
+                # 调用 Variable 的处理函数，得到处理后的结果
                 obj = self.var.resolve(context)
             except VariableDoesNotExist:
                 if ignore_failures:
@@ -816,18 +857,24 @@ class FilterExpression:
                         obj = string_if_invalid
         else:
             obj = self.var
+
+        # 对变量的值进行过滤器处理
         for func, args in self.filters:
             arg_vals = []
             for lookup, arg in args:
+                # args是一个tuple (False, Variable)
                 if not lookup:
                     arg_vals.append(mark_safe(arg))
                 else:
+                    # 过滤器变参，需要先对变参进行处理
                     arg_vals.append(arg.resolve(context))
+            # 还不清楚下面代码的含义
             if getattr(func, 'expects_localtime', False):
                 obj = template_localtime(obj, context.use_tz)
             if getattr(func, 'needs_autoescape', False):
                 new_obj = func(obj, autoescape=context.autoescape, *arg_vals)
             else:
+                # 执行过滤器处理函数，返回处理结果
                 new_obj = func(obj, *arg_vals)
             if getattr(func, 'is_safe', False) and isinstance(obj, SafeData):
                 obj = mark_safe(new_obj)
@@ -966,6 +1013,7 @@ class Variable:
         """
         Resolve this variable against a given context.
         基于传入的context字典，处理变量的值，也就是说，如果是变量/对象，则通过该方法，可以得到变量的值
+        :return 处理结果
         """
         if self.lookups is not None:
             # We're dealing with a variable that needs to be resolved
