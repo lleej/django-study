@@ -18,6 +18,10 @@ class EngineHandler:
     保存项目配置文件中的settings.TEMPLATE配置信息
     该信息是模板引擎的配置信息
     该对象，在django.template.__init__.py中进行了实例化，也就是说是一个单例对象
+    属性：
+    1. _templates. 构造函数传入参数 或者 settings.TEMPLATE
+    2. templates. 可用的所有TEMPLATE的配置信息
+    3. all. 返回所有模板对象实例数组
     """
     def __init__(self, templates=None):
         """
@@ -25,6 +29,8 @@ class EngineHandler:
         (structured like settings.TEMPLATES).
         """
         self._templates = templates
+        # 初始化
+        # 在 __getitem__ 读取时进行赋值
         self._engines = {}
 
     @cached_property
@@ -99,13 +105,14 @@ class EngineHandler:
                 "Set a unique NAME for each engine in settings.TEMPLATES."
                 .format(", ".join(duplicates)))
 
+        # 返回的是配置信息
         return templates
 
     def __getitem__(self, alias):
         """
         将自身转换为一个迭代对象
-        :param alias: 模板的名称，即OrderedDict中的key值
-        :return: 模板结构 { ... }
+        :param alias: 模板引擎的名称，即OrderedDict中的key值
+        :return: 模板引擎的实例
         """
         try:
             # _engines默认为{}
@@ -139,6 +146,7 @@ class EngineHandler:
         :return: templates中所有key值的迭代对象
         """
         # iter(OrderdDict()) 把OrderedDict的key值取出，作为迭代的值
+        # 调用templates()方法
         return iter(self.templates)
 
     def all(self):
@@ -146,6 +154,12 @@ class EngineHandler:
         返回所有的可以使用的模板
         :return:
         """
+        # 这一句话很有意思，处理非常巧妙
+        # 1. for alias in self 使用了self的迭代器，也就是要调用__iter__函数
+        # 所以取出的alias应该是templates()返回的配置列表的Dict的Key，例如:django
+        # 2. self[alias] 使用了取出成员的特性，也就是要调用 __getitem__ 函数
+        # 返回的是可以使用的模板引擎的实例
+        # 最终返回一个列表表达式
         return [self[alias] for alias in self]
 
 

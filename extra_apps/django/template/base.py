@@ -1,6 +1,11 @@
 """
 This is the Django template system.
 这是django的模板系统，对符合规格的模板字符串进行预处理
+处理过程如下：
+1. input = read(TemplateFile)
+2. Tokens = Lexer.tokenize(input)
+3. Nodes = parser.parse(tokens)
+4. output = Nodes.render(context)
 
 主要对象说明
 1. 词法解析器 Lexer
@@ -21,46 +26,96 @@ This is the Django template system.
 
     1.2 Token
     作用：从模板字符串中，分隔出的词法标记，主要用于存储原始标记内容
-    属性：类型、内容、位置、行号
+    属性：
+    1. token_type: 类型 对应 TokenType类型，例如：TokenType.VAR 或者 1
+    2. contents: 内容 原始标记的内容，例如：{{ user_name }} contents: user_name
+    3. position: 位置 在当前行中的起始和结束位置，例如：(0, 30)
+    4. lineno: 行号 根据 \n 字符数量判断，例如：2
 
 
 2. 语法解析器 Parser
 作用：编译语法标记(token)为Node对象
 核心：采用自顶向下的递归处理，本模块中提供了基础的TextNode和VariableNode，其他类型的节点在defaulttags.py模块以及用户自定义的模块中
 函数：parser.parse(parse_until)
-参数：parse_untile 表示递归处理到哪个Token结束
+参数：parse_untile 表示递归处理到哪个Token结束本次递归
 输入：Token list
-输出：Node list
+输出：NodeList()实例
 
 语法解析器使用的对象：
     2.1 Variable 变量处理对象
-    作用：处理Token内容，判断其内容是常量"xxx"，变量xxx，还是对象xxx.yyy.zzz
+    作用：
+    1. 处理Token的contents，判断其内容是常量"xxx"，还是变量xxx.yyy.zzz
+    1.1 一个Token的contents中，可以包含多个待处理的变量
+    2. 基于提供的context环境，得到变量对应的值
+    属性：
+    1. var 保存原始token串
+    2. literal 当var是常量时(以引号包裹)，保存到literal
+    3. lookups 当var是变量时，保存到lookups。用'.'分割，对于对象来说分解为多个值，保存到tuple中
+    4. translate 是否需要翻译('_(xxx)')，
     函数：resolve(context) 从context环境对象中取出变量的值，可以是对象、变量、无参方法
     输出：渲染后的结果
 
     2.2 FilterExpression 过滤器表达式对象
-    作用：处理Token中变量的内容，得到变量对象Variant以及过滤器列表filters
+    作用：处理Token中Variable的内容，得到变量对象Variant以及过滤器列表filters
+    1. FilterExpression 只处理变量token，因为需要基于context得到计算后的值，而且结果可以通过过滤器进行处理
+    2. 一个FilterExpression 只能有一个Variable对象
+    属性：
+    1. token. token的content 字符串
+    2. var. token中包含的变量，Variable实例
+    2. filters. token中包含的过滤器列表，格式[(func, [(False, Variable), (True, Variable)]), ]
     函数：resolve(context) 会调用Variable的resolve()函数，然后调用过滤器处理函数
     输出：渲染后的结果
 
     2.3 Node 节点对象
     作用：对包含的子节点或者变量进行渲染
     说明：Node 是一个基类，提供了render()函数
+    属性：
+    1. token. 初始化为None，没有使用
+    2. child_nodelists. 存放保存子节点的属性名称. 初始化为: ('nodelist',)
+    3. must_be_first. Boolean类型，是否作为第一个节点渲染，初始化为：False
+    函数：
+    1. get_nodes_by_type(nodetype) 遍历节点以及子节点中nodetype的节点，并以list的形式返回。子类可以直接使用
+    2. render(context) 渲染函数，子类必须重载之
+    3. render_annotated(context) 当Debug开启时，输出有价值信息
     可以通过继承Node，实现对特定节点的渲染，例如：if for url等
     本模块中提供了TextNode 和 VariableNode
 
         2.3.1 TextNode 文本节点对象
         作用：用于保存纯文本的内容，其渲染函数只返回自身保存的字符串
+        属性：
+        1. s. 保存文本内容
+        方法：
+        __init__(s), 传入节点的文本值s
+        render()重载，直接输出s的内容
 
         2.3.2 VariableNode 变量节点对象
         作用：对变量(包含过滤器) 进行渲染，调用 FilterExpression的resolve()进行渲染，然后对结果进行转义处理
+        属性：
+        1. filter_expression. 传入的过滤器表达式实例
+        方法：
+        1. __init__(expression)，传入一个过滤器表达式
+        2. render()重载，调用(filter_expression.render() --> Variable.render() --> 过滤器处理) --> 类型转换并转义
 
     2.4 NodeList 节点列表对象
-    作用：
+    作用：保存节点的列表对象
+    属性：
+    1. contains_nontext. 是否包含非TextNode
+    方法：
+    1. get_nodes_by_type(nodetype). 类似于Node中的同名函数，遍历所有节点并调用所有节点的同名函数
+    2. render(context). 渲染当前列表中的所有节点
 
 3. 模板包装器 Template
 作用：封装模板的编译和渲染过程，方便使用者使用
-核心：
+核心：compile_nodelist()编译出节点；render()渲染节点
+属性：
+1. name. 模板名称
+2. source
+3. origin. 模板文件名
+4. nodelist. 调用compile_nodelist解析出的NodeList()实例
+5. engine. 模板处理引擎
+方法：
+1. compile_nodelist. 编译输出节点，返回NodeList()
+2. render(). 渲染模板
 
 
 
@@ -178,6 +233,9 @@ class VariableDoesNotExist(Exception):
 
 
 class Origin:
+    """
+    保存模板源文件名以及加载器对象
+    """
     def __init__(self, name, template_name=None, loader=None):
         self.name = name
         self.template_name = template_name
@@ -202,6 +260,10 @@ class Origin:
 
 
 class Template:
+    """
+    建议直接使用Engine来实例化Template
+    这个类保留向后兼容直接创建和实例化模板的能力
+    """
     def __init__(self, template_string, origin=None, name=None, engine=None):
         """
         实例化模板对象
@@ -1204,11 +1266,14 @@ def render_value_in_context(value, context):
     means escaping, if required, and conversion to a string. If value is a
     string, it's expected to already be translated.
     """
+    # 转换datetime类型的value --> string值
     value = template_localtime(value, use_tz=context.use_tz)
+    # 本地化输出
     value = localize(value, use_l10n=context.use_l10n)
     if context.autoescape:
         if not issubclass(type(value), str):
             value = str(value)
+        # 自动转义
         return conditional_escape(value)
     else:
         return str(value)

@@ -44,6 +44,7 @@ Shared:
 from .engine import Engine
 from .utils import EngineHandler
 
+# 单例对象，保存所有内置和第三方引擎的实例
 engines = EngineHandler()
 
 __all__ = ('Engine', 'engines')
