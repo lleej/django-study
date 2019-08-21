@@ -131,9 +131,20 @@ class FirstOfNode(Node):
 
 
 class ForNode(Node):
+    """
+    for语句的节点，包含for语句的所有内容
+    """
     child_nodelists = ('nodelist_loop', 'nodelist_empty')
 
     def __init__(self, loopvars, sequence, is_reversed, nodelist_loop, nodelist_empty=None):
+        """
+        构造函数
+        :param loopvars: 循环变量的列表，如：['x'] ['x', 'y']
+        :param sequence: 迭代变量的FilterExpression实例
+        :param is_reversed: 是否倒序
+        :param nodelist_loop: loop块中的Node列表
+        :param nodelist_empty: empty块中的Node列表
+        """
         self.loopvars, self.sequence = loopvars, sequence
         self.is_reversed = is_reversed
         self.nodelist_loop = nodelist_loop
@@ -153,29 +164,52 @@ class ForNode(Node):
         )
 
     def render(self, context):
+        """
+        for语句的渲染函数
+        :param context: Context 上下文变量
+        :return: str 渲染结果
+        """
         if 'forloop' in context:
             parentloop = context['forloop']
         else:
             parentloop = {}
+
+        # context.push() 返回 ContextDict实例，该实例实现了上下文管理器
+        # 添加一个{}空的环境变量到context中，这个变量作为本次处理使用
+        # 添加后context.dicts[-1]就指向当前的环境变量
         with context.push():
+            # 渲染迭代变量，输出应该是一个可迭代对象
             values = self.sequence.resolve(context, ignore_failures=True)
+            # None不是可迭代对象，必须转换为[]
             if values is None:
                 values = []
+            # 需要取得可迭代对象的长度，因此必须实现__len__方法
             if not hasattr(values, '__len__'):
                 values = list(values)
+            # 计算迭代对象的长度
             len_values = len(values)
             if len_values < 1:
+                # 如果长度为0，则渲染empty块的标记
+                # 完成渲染过程，返回结果
                 return self.nodelist_empty.render(context)
+
+            # 以下是处理循环体
             nodelist = []
             if self.is_reversed:
+                # 如果是倒序，则倒序迭代对象
                 values = reversed(values)
+            # 取得循环变量的数量
             num_loopvars = len(self.loopvars)
             unpack = num_loopvars > 1
             # Create a forloop value in the context.  We'll update counters on each
             # iteration just below.
             loop_dict = context['forloop'] = {'parentloop': parentloop}
+            # 循环处理
             for i, item in enumerate(values):
                 # Shortcuts for current loop iteration number.
+                # 因为loop_dict 指向 context['forloop']
+                # 以下添加的环境变量，会添加到'forloop'变量中，可以在循环体中的节点中使用
+                # 例如：forloop.counter
                 loop_dict['counter0'] = i
                 loop_dict['counter'] = i + 1
                 # Reverse counter iteration numbers.
@@ -200,11 +234,17 @@ class ForNode(Node):
                             .format(num_loopvars, len_item),
                         )
                     unpacked_vars = dict(zip(self.loopvars, item))
+                    # 下面创建一个新的环境变量的列表元素，所以本次循环结束后，必须删除之
                     pop_context = True
+                    # 创建一个新的列表元素
                     context.update(unpacked_vars)
                 else:
+                    # 只有一个循环变量
+                    # 添加到context.dicts[-1]当前的环境变量中
+                    # 每次循环，循环变量的值不同，在这里就会更新循环变量的值
                     context[self.loopvars[0]] = item
 
+                # 使用这个环境变量，渲染循环体中的各个节点
                 for node in self.nodelist_loop:
                     nodelist.append(node.render_annotated(context))
 
@@ -789,32 +829,44 @@ def do_for(parser, token):
                                     current one
         ==========================  ================================================
     """
+    # 分隔Token的内容，因为 for 语句有多个元素
     bits = token.split_contents()
+    # for 语句必须有四个有效的元素
     if len(bits) < 4:
         raise TemplateSyntaxError("'for' statements should have at least four"
                                   " words: %s" % token.contents)
 
+    # 判断左右一个元素是否为'reversed' 表示：是否倒序循环
     is_reversed = bits[-1] == 'reversed'
+    # 判断 'in' 所在的位置
     in_index = -3 if is_reversed else -2
+    # 如果不是 'in' 则语法错误
     if bits[in_index] != 'in':
         raise TemplateSyntaxError("'for' statements should use the format"
                                   " 'for x in y': %s" % token.contents)
 
+    # 空格 " ' | 这四个字符不能出现在for语句的循环变量中
     invalid_chars = frozenset((' ', '"', "'", FILTER_SEPARATOR))
+    # 取出循环变量，可以是多个
     loopvars = re.split(r' *, *', ' '.join(bits[1:in_index]))
     for var in loopvars:
         if not var or not invalid_chars.isdisjoint(var):
             raise TemplateSyntaxError("'for' tag received an invalid argument:"
                                       " %s" % token.contents)
 
+    # 创建迭代变量的FilterExpression
     sequence = parser.compile_filter(bits[in_index + 1])
+    # 递归处理parser中的tokens，直到遇到'empty'或者'endfor'
     nodelist_loop = parser.parse(('empty', 'endfor',))
+    # 取出parser中第一个token，就是上面的'empty' 或者 'endfor'，这个是在parser.parse中处理的，当遇到parser_unitl时，将token添加到tokens的第一个
     token = parser.next_token()
     if token.contents == 'empty':
+        # 如果是'empty'，则继续处理 token 直到遇到'endfor'
         nodelist_empty = parser.parse(('endfor',))
         parser.delete_first_token()
     else:
         nodelist_empty = None
+    # 创建ForNode实例
     return ForNode(loopvars, sequence, is_reversed, nodelist_loop, nodelist_empty)
 
 

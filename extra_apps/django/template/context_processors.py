@@ -1,4 +1,14 @@
 """
+HttpRequest 请求处理器，返回dict字典对象，并合并到 模板的 context 中
+
+context_processor 是作为 Engine实例化时的入口参数，保存在Engine实例中
+
+RequestContext.bind_template 中，通过绑定的Template得到context_processor，对HttpRequest进行处理，并将处理结果合并到context中
+
+context_processor的规则如下：
+1. 必须是一个处理函数
+2. 函数必须有一个request参数，参数类型为HttpRequest
+
 A set of request processors that return dictionaries to be merged into a
 template context. Each function takes the request object as its only parameter
 and returns a dictionary to add to the context.

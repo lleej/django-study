@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd27388a-69f9-4871-bfd8-ae154e6abaec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/oilapp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/oilapp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/library.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/library.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/base_site.html" beforeDir="false" afterPath="$PROJECT_DIR$/polls/admin/base_site.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/context.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/context.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/context_processors.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/context_processors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/defaulttags.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/defaulttags.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/polls/zsq.py" beforeDir="false" afterPath="$PROJECT_DIR$/polls/zsq.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -262,7 +260,7 @@
       <workItem from="1565331188097" duration="10441000" />
       <workItem from="1565590415090" duration="88302000" />
       <workItem from="1566103221776" duration="8637000" />
-      <workItem from="1566175764382" duration="37895000" />
+      <workItem from="1566175764382" duration="50869000" />
     </task>
     <servers />
   </component>
@@ -335,11 +333,6 @@
           <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/polls/zsq.py</url>
-          <line>116</line>
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/library.py</url>
           <line>151</line>
           <option name="timeStamp" value="98" />
@@ -354,12 +347,28 @@
           <line>239</line>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/context.py</url>
+          <line>268</line>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/extra_apps/django/template/engine.py</url>
+          <line>63</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/engine.py</url>
+          <line>22</line>
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="func" />
         <watch expression="getattr(func, &quot;_decorated_function&quot;, 'None')" language="Python" />
+        <watch expression="User" language="Python" />
       </configuration>
       <configuration name="Python.DjangoServer">
         <watch expression="urlconf_module" />
@@ -374,7 +383,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/oilapp$zsq.coverage" NAME="zsq Coverage Results" MODIFIED="1566190329071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/polls" />
+    <SUITE FILE_PATH="coverage/oilapp$zsq.coverage" NAME="zsq Coverage Results" MODIFIED="1566363129989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/polls" />
     <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_model___tag_view.coverage" NAME="Test: polls --tag model --tag view Coverage Results" MODIFIED="1564456505636" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/oilapp$views.coverage" NAME="views Coverage Results" MODIFIED="1563778895390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oil" />
     <SUITE FILE_PATH="coverage/oilapp$tests.coverage" NAME="tests Coverage Results" MODIFIED="1563869540872" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oil" />
