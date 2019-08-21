@@ -9,8 +9,49 @@ from .context import _builtin_context_processors
 from .exceptions import TemplateDoesNotExist
 from .library import import_library
 
+"""
+类型：Engine
+作用：通用的模板引擎
+概念：
+1. 模板引擎。指对模板中的tag 和 filter 进行定义的模块。其载体为：Library()的实例 register
+在模板引擎模块中，所有的 tag 和 filter 处理函数，都注册到 register 实例中 
+但是：在这里是放在backends中的，不清楚为什么？
+
+有什么：
+1. 引擎包含的处理 tag 和 filter 的库 register 实例
+能做什么：
+1. 根据模板文件名称，渲染出字符串的结果
+2. 根据模板字符串，返回Template实例
+3. 根据模板文件名称，返回Template实例
+"""
+
 
 class Engine:
+    """
+    属性：
+    1. 传入属性
+        1.1 dirs: list 模板文件存放的路径，在settings.TEMPLATE中设置
+        1.2 app_dirs: boolean 是否查找安装应用中的templates目录
+        1.3 context_processors
+        1.4 debug: boolean 是否调试状态
+        1.5 loaders
+        1.6 string_if_invalid: str 无效的替代字符
+        1.7 file_charset: str 字符集名称
+        1.8 libraries: dict 可以使用的标记处理库模块 即有 register实例的模块，其中包含了对 tag 和 filter 的处理函数
+        1.9 builtins: list 内置标记处理库模块
+        1.10 autoescape: boolean 是否进行HTML转义，对于HTML页面必须进行转义
+    2. 属性
+        2.1 default_builtins: list 默认内置标记处理库模块 硬编码
+        2.2 template_builtins: list 内置标记处理库模块的register实例
+        2.3 template_libraries: dict 自定义标记处理库模块的register实例
+
+    方法：
+    1. from_string(template_mode) 基于模板字符串，创建此引擎的Template实例
+    2. get_default() 返回第一个可以使用的DjangoTemplate类型的引擎对象，一般用于Template中没有指定engine属性的情况
+    3. get_template(name) 根据模板文件的名称，返回django.template.Template 实例
+    4. select_template(name_list) 给出一个模板文件的列表，返回第一个可用的模板文件的 django.template.Template 实例
+    5. render_to_string(name, context) 给出一个模板文件名(列表)以及上下文，读取模板文件，并基于上下文渲染出结果，返回渲染后的字符串
+    """
     default_builtins = [
         'django.template.defaulttags',
         'django.template.defaultfilters',

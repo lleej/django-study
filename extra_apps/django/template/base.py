@@ -106,6 +106,7 @@ This is the Django template system.
 
 3. 模板包装器 Template
 作用：封装模板的编译和渲染过程，方便使用者使用
+一般情况下，不直接使用Template的实例化，而是使用Engine
 核心：compile_nodelist()编译出节点；render()渲染节点
 属性：
 1. name. 模板名称
@@ -270,7 +271,7 @@ class Template:
         根据传入的模板字符串、engine，对模板字符串进行解析和编译
         输出编译后的Node对象
         :param template_string: 模板字符串，例如 {{ user_name }}
-        :param origin: 模板字符串文件
+        :param origin: 模板文件
         :param name:
         :param engine:
         """
@@ -931,6 +932,9 @@ class FilterExpression:
                     # 过滤器变参，需要先对变参进行处理
                     arg_vals.append(arg.resolve(context))
             # 还不清楚下面代码的含义
+            # 用 @register.filter 注册过滤器处理函数时，传入的 flags
+            # 固定可选项为: ('expects_localtime', 'is_safe', 'needs_autoescape') 之一
+            # 将传入的参数设置为 func 的属性
             if getattr(func, 'expects_localtime', False):
                 obj = template_localtime(obj, context.use_tz)
             if getattr(func, 'needs_autoescape', False):
@@ -1303,6 +1307,17 @@ kwarg_re = re.compile(r"(?:(\w+)=)?(.+)")
 
 def token_kwargs(bits, parser, support_legacy=False):
     """
+    解析 Token 中 的关键字参数 并 返回 {param_name: FilterExpression(param_Value)}
+    如果不是关键字参数，则返回 {}
+
+    :param bits list(str) Token 中的关键字参数
+    :param support_legacy boolean True--支持 as 语句; False--必须是 = 语句
+
+    示例如下：
+    {% include xxxx with name=opts.verbose_name %}
+
+    返回 {'name': FilterExpression('opts.verbose_name', parser)}
+
     Parse token keyword arguments and return a dictionary of the arguments
     retrieved from the ``bits`` token list.
 

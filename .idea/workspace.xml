@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd27388a-69f9-4871-bfd8-ae154e6abaec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/oilapp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/oilapp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/extra_apps/django/template/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extra_apps/django/template/library.py" beforeDir="false" afterPath="$PROJECT_DIR$/extra_apps/django/template/library.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/base_site.html" beforeDir="false" afterPath="$PROJECT_DIR$/polls/admin/base_site.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,20 +48,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>all_models</find>
-      <find>display_for_field</find>
-      <find>label_for_field</find>
-      <find>partial</find>
-      <find>static</find>
-      <find>classmethod</find>
-      <find>__init__</find>
-      <find>importlib_find</find>
-      <find>apps</find>
-      <find>import_models</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -81,15 +66,16 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/polls" />
+      <recent name="$PROJECT_DIR$/templates/admin" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/makevue" />
       <recent name="$PROJECT_DIR$/polls/templates" />
       <recent name="$PROJECT_DIR$/manage_test/management" />
       <recent name="$PROJECT_DIR$/extra_apps" />
       <recent name="$PROJECT_DIR$/templates" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/templates/admin" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -105,28 +91,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Django server.oilapp">
-    <configuration name="admin" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="oilapp" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/oil" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/oil/admin.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="templates" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="oilapp" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -215,6 +179,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="zsq" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="oilapp" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/polls" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/polls/zsq.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="oilapp" type="Python.DjangoServer" factoryName="Django server">
       <module name="oilapp" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -241,16 +227,16 @@
     </configuration>
     <list>
       <item itemvalue="Django server.oilapp" />
-      <item itemvalue="Python.admin" />
       <item itemvalue="Python.templates" />
       <item itemvalue="Python.test_models" />
       <item itemvalue="Python.tests" />
       <item itemvalue="Python.views" />
+      <item itemvalue="Python.zsq" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.zsq" />
         <item itemvalue="Python.templates" />
-        <item itemvalue="Python.test_models" />
         <item itemvalue="Python.test_models" />
         <item itemvalue="Python.test_models" />
         <item itemvalue="Python.test_models" />
@@ -276,6 +262,7 @@
       <workItem from="1565331188097" duration="10441000" />
       <workItem from="1565590415090" duration="88302000" />
       <workItem from="1566103221776" duration="8637000" />
+      <workItem from="1566175764382" duration="37895000" />
     </task>
     <servers />
   </component>
@@ -319,41 +306,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>411</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>147</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>182</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>342</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>389</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>335</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>403</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
           <line>487</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
@@ -373,40 +325,9 @@
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/loader_tags.py</url>
-          <line>260</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/loader_tags.py</url>
-          <line>288</line>
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/defaulttags.py</url>
           <line>821</line>
           <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/defaulttags.py</url>
-          <line>668</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>669</line>
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <condition expression="len(self.lookups) &gt; 1" language="Python" />
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>825</line>
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/defaulttags.py</url>
-          <line>1067</line>
-          <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/smartif.py</url>
@@ -414,28 +335,32 @@
           <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/base.py</url>
-          <line>482</line>
-          <option name="timeStamp" value="73" />
+          <url>file://$PROJECT_DIR$/polls/zsq.py</url>
+          <line>116</line>
+          <option name="timeStamp" value="83" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/defaulttags.py</url>
-          <line>791</line>
-          <option name="timeStamp" value="74" />
+          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/library.py</url>
+          <line>151</line>
+          <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/defaulttags.py</url>
-          <line>875</line>
-          <option name="timeStamp" value="78" />
+          <url>file://$PROJECT_DIR$/extra_apps/django/template/library.py</url>
+          <line>319</line>
+          <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../oil/lib/python3.6/site-packages/django/template/defaultfilters.py</url>
-          <line>753</line>
-          <option name="timeStamp" value="80" />
+          <url>file://$PROJECT_DIR$/extra_apps/django/template/library.py</url>
+          <line>239</line>
+          <option name="timeStamp" value="108" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="func" />
+        <watch expression="getattr(func, &quot;_decorated_function&quot;, 'None')" language="Python" />
+      </configuration>
       <configuration name="Python.DjangoServer">
         <watch expression="urlconf_module" />
         <watch expression="module" />
@@ -449,15 +374,16 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/oilapp$zsq.coverage" NAME="zsq Coverage Results" MODIFIED="1566190329071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/polls" />
     <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_model___tag_view.coverage" NAME="Test: polls --tag model --tag view Coverage Results" MODIFIED="1564456505636" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_model_view.coverage" NAME="Test: polls --tag model view Coverage Results" MODIFIED="1564456496278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_model.coverage" NAME="Test: polls --tag model Coverage Results" MODIFIED="1564456467141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/oilapp$tests.coverage" NAME="tests Coverage Results" MODIFIED="1563869540872" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oil" />
-    <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_abc.coverage" NAME="Test: polls --tag abc Coverage Results" MODIFIED="1564457017063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/oilapp$Test__polls_tests.coverage" NAME="Test: polls.tests Coverage Results" MODIFIED="1564736620770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/oilapp$Test__polls.coverage" NAME="Test: polls Coverage Results" MODIFIED="1564457032654" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/oilapp$admin.coverage" NAME="admin Coverage Results" MODIFIED="1564362275354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oil" />
     <SUITE FILE_PATH="coverage/oilapp$views.coverage" NAME="views Coverage Results" MODIFIED="1563778895390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oil" />
+    <SUITE FILE_PATH="coverage/oilapp$tests.coverage" NAME="tests Coverage Results" MODIFIED="1563869540872" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oil" />
+    <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_model_view.coverage" NAME="Test: polls --tag model view Coverage Results" MODIFIED="1564456496278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_selenium.coverage" NAME="Test: polls --tag selenium Coverage Results" MODIFIED="1564456520254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_model.coverage" NAME="Test: polls --tag model Coverage Results" MODIFIED="1564456467141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/oilapp$Test__polls.coverage" NAME="Test: polls Coverage Results" MODIFIED="1564457032654" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/oilapp$Test__polls_tests.coverage" NAME="Test: polls.tests Coverage Results" MODIFIED="1564736620770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/oilapp$admin.coverage" NAME="admin Coverage Results" MODIFIED="1564362275354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oil" />
+    <SUITE FILE_PATH="coverage/oilapp$Test__polls___tag_abc.coverage" NAME="Test: polls --tag abc Coverage Results" MODIFIED="1564457017063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
