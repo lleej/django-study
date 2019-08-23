@@ -120,27 +120,139 @@
 # 单例装饰器
 
 # 保存单例的实例，key: cls_name; value: instance
-instances = {}
+# instances = {}
+#
+#
+# def singleton(cls):
+#     def get_instance(*args, **kwargs):
+#         cls_name = cls.__name__
+#         if cls_name not in instances:
+#             instance = cls(*args, **kwargs)
+#             instances[cls_name] = instance
+#         return instances[cls_name]
+#     return get_instance
+#
+#
+# @singleton
+# class User:
+#     def __init__(self, name):
+#         self.name = name
+#
+#
+# u1 = User('jack')
+# u1.age = 20
+#
+# u2 = User('maggie')
+# u2.name
+
+import re
+
+token_pat = re.compile("\s*(?:(\d+)|(.))")
+
+class TokenBase:
+    """
+    Base class for operators and literals, mainly for debugging and for throwing
+    syntax errors.
+    """
+    id = None  # node/token type name
+    value = None  # used by literals
+    first = second = None  # used by tree nodes
+
+    def nud(self, parser=None):
+        # Null denotation - called in prefix context
+        pass
+
+    def led(self, left, parser=None):
+        # Left denotation - called in infix context
+        pass
+
+    def display(self):
+        """
+        Return what to display in error messages for this nod
+        """
+        return self.id
+
+    def __repr__(self):
+        out = [str(x) for x in [self.id, self.value, self.first, self.second] if x is not None]
+        return "(" + " ".join(out) + ")"
 
 
-def singleton(cls):
-    def get_instance(*args, **kwargs):
-        cls_name = cls.__name__
-        if cls_name not in instances:
-            instance = cls(*args, **kwargs)
-            instances[cls_name] = instance
-        return instances[cls_name]
-    return get_instance
+class LiteralToken(TokenBase):
+    def __init__(self, value):
+        self.value = int(value)
+
+    def nud(self, parser=None):
+        return self.value
 
 
-@singleton
-class User:
-    def __init__(self, name):
-        self.name = name
+class OperatorAddToken(TokenBase):
+    lbp = 10
+
+    def led(self, left, parser=None):
+        right = expression(10)
+        return left + right
 
 
-u1 = User('jack')
-u1.age = 20
+class OperatorMulToken(TokenBase):
+    lbp = 11
 
-u2 = User('maggie')
-u2.name
+    def led(self, left, parser=None):
+        right = expression(11)
+        return left * right
+
+
+class OperatorDivToken(TokenBase):
+    lbp = 11
+
+    def led(self, left, parser=None):
+        right = expression(11)
+        return left / right
+
+
+class OperatorMulToken(TokenBase):
+    lbp = 11
+
+    def led(self, left, parser=None):
+        right = expression(11)
+        return left * right
+
+
+class EndToken(TokenBase):
+    lbp = 0
+
+
+def tokenize(program):
+    for number, operator in token_pat.findall(program):
+        if number:
+            yield LiteralToken(number)
+        elif operator == "+":
+            yield OperatorAddToken()
+        elif operator == "*":
+            yield OperatorMulToken()
+        else:
+            raise SyntaxError("unknown operator")
+    yield EndToken()
+
+
+def expression(rbp=0):
+    global token, tokens
+    t = token
+    token = next(tokens)
+    left = t.nud()
+    while rbp < token.lbp:
+        t = token
+        token = next(tokens)
+        left = t.led(left)
+    return left
+
+
+def parse(program):
+    global token, tokens
+    tokens = tokenize(program)
+    token = next(tokens)
+    return expression()
+
+
+num = parse("1 + 2 * 3 + 4 * 5")
+
+print(num)

@@ -169,6 +169,7 @@ class ForNode(Node):
         :param context: Context 上下文变量
         :return: str 渲染结果
         """
+        # forloop 是for循环的临时变量存放的盒子
         if 'forloop' in context:
             parentloop = context['forloop']
         else:
@@ -319,26 +320,41 @@ class IfEqualNode(Node):
 
 
 class IfNode(Node):
-
+    """
+    if 语句解析后的节点对象
+    包含if elif else 中对应的 判断条件 和 语句块
+    """
     def __init__(self, conditions_nodelists):
+        """
+        构造函数
+        :param conditions_nodelists: [(conditions, nodelists)] 包含tuple的list
+        """
         self.conditions_nodelists = conditions_nodelists
 
     def __repr__(self):
         return '<%s>' % self.__class__.__name__
 
     def __iter__(self):
+        # 从 conditions_nodelists 中依次取出元素，并迭代输出 nodelist
         for _, nodelist in self.conditions_nodelists:
             yield from nodelist
 
     @property
     def nodelist(self):
+        """
+        将IfNode.conditions_nodelists 中的 nodelists 转换为NodeList
+        :return: NodeList实例
+        """
+        # NodeList是List子类，构造函数传入的应该是一个可迭代对象
+        # 就会调用self.__iter__()方法，获得迭代对象
         return NodeList(self)
 
     def render(self, context):
         for condition, nodelist in self.conditions_nodelists:
-
+            # 依次取出条件判断语句和对应的语法块
             if condition is not None:           # if / elif clause
                 try:
+                    # 计算条件判断语句是否为True
                     match = condition.eval(context)
                 except VariableDoesNotExist:
                     match = None
@@ -346,8 +362,12 @@ class IfNode(Node):
                 match = True
 
             if match:
+                # 条件语句为True
+                # 对应的节点渲染
+                # 因为if只有一个条件语句为True, 因此直接返回，并跳过后续的处理
                 return nodelist.render(context)
-
+        # 如果所有的条件都不满足
+        # 没有任何返回值，默认为''空串
         return ''
 
 
@@ -999,14 +1019,18 @@ def do_if(parser, token):
     Operator precedence follows Python.
     """
     # {% if ... %}
+    # 分隔if语句中的各个变量和元素
     bits = token.split_contents()[1:]
+    # 创建条件节点
     condition = TemplateIfParser(parser, bits).parse()
+    # 从parser.tokens中取出if语法块
     nodelist = parser.parse(('elif', 'else', 'endif'))
     conditions_nodelists = [(condition, nodelist)]
     token = parser.next_token()
 
     # {% elif ... %} (repeatable)
     while token.contents.startswith('elif'):
+        # 循环处理elif语法块
         bits = token.split_contents()[1:]
         condition = TemplateIfParser(parser, bits).parse()
         nodelist = parser.parse(('elif', 'else', 'endif'))
@@ -1015,14 +1039,17 @@ def do_if(parser, token):
 
     # {% else %} (optional)
     if token.contents == 'else':
+        # 处理else语法块
         nodelist = parser.parse(('endif',))
         conditions_nodelists.append((None, nodelist))
         token = parser.next_token()
 
     # {% endif %}
     if token.contents != 'endif':
+        # 判断语法是否正确
         raise TemplateSyntaxError('Malformed template tag at line {0}: "{1}"'.format(token.lineno, token.contents))
 
+    # 创建IfNode对象 并 返回该节点对象
     return IfNode(conditions_nodelists)
 
 

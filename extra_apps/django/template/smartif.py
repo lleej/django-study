@@ -31,7 +31,7 @@ class TokenBase:
 
     def display(self):
         """
-        Return what to display in error messages for this node
+        Return what to display in error messages for this nod
         """
         return self.id
 
